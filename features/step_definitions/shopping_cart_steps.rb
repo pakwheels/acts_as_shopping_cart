@@ -4,12 +4,12 @@ end
 
 Then /^the total for the cart should be "([^"]*)"$/ do |total|
   @cart.reload
-  expect(@cart.total).to eq(Money.new(total.to_f * 100))
+  expect(@cart.total.to_f.round(2)).to eq(total.to_f.round(2))
 end
 
 Then /^the subtotal for the cart should be "([^"]*)"$/ do |subtotal|
   @cart.reload
-  expect(@cart.subtotal).to eq(Money.new(subtotal.to_f * 100))
+  expect(@cart.subtotal).to eq(subtotal.to_f.round(2))
 end
 
 When /^I add product "([^"]*)" to cart with price "([^"]*)"$/ do |product_name, price|
@@ -62,7 +62,7 @@ end
 Then /^the price for "([^"]*)" on the cart should be "([^"]*)"$/ do |product_name, price|
   @cart.reload
   product = Product.find_by_name(product_name)
-  expect(@cart.price_for(product)).to eq(Money.from_amount(price.to_f))
+  expect(@cart.price_for(product)).to eq(price.to_f.round(2))
 end
 
 When /^I update the "([^"]*)" quantity to "([^"]*)"$/ do |product_name, quantity|

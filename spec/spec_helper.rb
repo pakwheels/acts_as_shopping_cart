@@ -7,11 +7,9 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 require "simplecov"
 require "rails"
 require "active_record"
-require "money-rails"
 
 ActiveRecord::Base.establish_connection adapter: "sqlite3", database: ":memory:"
 
-MoneyRails::Hooks.init
 require "acts_as_shopping_cart"
 
 SimpleCov.start

@@ -156,41 +156,37 @@ describe ActiveRecord::Acts::ShoppingCart::Collection do
       end
 
       it "returns 0" do
-        expect(subject.subtotal).to be_an_instance_of(Money)
-        expect(subject.subtotal).to eq(Money.new(0))
+        expect(subject.subtotal).to eq(0)
       end
     end
 
     context "cart has items" do
       before do
-        items = [instance_double("item 1", quantity: 2, price: Money.new(3399)),
-                 instance_double("item 2", quantity: 1, price: Money.new(4599))]
+        items = [instance_double("item 1", quantity: 2, price: 3399),
+                 instance_double("item 2", quantity: 1, price: 4599)]
         allow(subject).to receive(:shopping_cart_items).and_return(items)
       end
 
       it "returns the sum of the price * quantity for all items" do
-        expect(subject.subtotal).to be_an_instance_of(Money)
-        expect(subject.subtotal).to eq(Money.new(11_397))
+        expect(subject.subtotal).to eq(11_397)
       end
     end
   end
 
   describe :shipping_cost do
     it "returns 0" do
-      expect(subject.shipping_cost).to be_an_instance_of Money
-      expect(subject.shipping_cost).to eq(Money.new(0))
+      expect(subject.shipping_cost).to eq(0)
     end
   end
 
   describe :taxes do
     context "subtotal is 100" do
       before do
-        allow(subject).to receive(:subtotal).and_return(Money.new(10_000))
+        allow(subject).to receive(:subtotal).and_return(10_000)
       end
 
       it "returns 8.25" do
-        expect(subject.taxes).to be_an_instance_of Money
-        expect(subject.taxes).to eq(Money.new(825))
+        expect(subject.taxes).to eq(825)
       end
     end
   end
@@ -204,16 +200,15 @@ describe ActiveRecord::Acts::ShoppingCart::Collection do
   describe :total do
     before do
       allow(subject).to receive_messages(
-        subtotal: Money.new(1099),
-        taxes: Money.new(1399),
-        shipping_cost: Money.new(1299),
+        subtotal: 1099,
+        taxes: 1399,
+        shipping_cost: 1299,
         reload: nil
       )
     end
 
     it "returns subtotal + taxes + shipping_cost" do
-      expect(subject.total).to be_an_instance_of Money
-      expect(subject.total).to eq(Money.new(3797))
+      expect(subject.total).to eq(3797)
     end
   end
 

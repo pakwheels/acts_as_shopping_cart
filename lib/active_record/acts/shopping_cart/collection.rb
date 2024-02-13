@@ -63,11 +63,11 @@ module ActiveRecord
         # items in the cart
         #
         def subtotal
-          shopping_cart_items.inject(Money.new(0)) { |a, e| a + (e.price * e.quantity) }
+          shopping_cart_items.inject(0) { |a, e| a + (e.price * e.quantity) }
         end
 
         def shipping_cost
-          Money.new(0)
+          0
         end
 
         def taxes
