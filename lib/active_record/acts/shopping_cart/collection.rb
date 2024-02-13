@@ -41,6 +41,9 @@ module ActiveRecord
         end
         alias :has_no_items? :no_items?
 
+        def empty?
+          !has_items?
+        end
 
         #
         # Remove an item from the cart
